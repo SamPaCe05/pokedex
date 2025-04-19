@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/src/tarjetas_pokemon.dart';
 
 class Busqueda extends StatefulWidget {
   const Busqueda({super.key});
@@ -8,10 +9,12 @@ class Busqueda extends StatefulWidget {
 }
 
 class _BusquedaState extends State<Busqueda> {
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controladorTextoBarraBusqueda =
+      TextEditingController();
+  final ScrollController _controladorScroll = ScrollController();
 
   void _evaluarTextoBusqueda() {
-    final texto = _controller.text.trim();
+    final texto = _controladorTextoBarraBusqueda.text.trim();
     if (texto.isNotEmpty) {
       _consultarApi(texto);
     }
@@ -62,8 +65,8 @@ class _BusquedaState extends State<Busqueda> {
               width: 360.43,
               height: 53,
               child: SearchBar(
-                controller: _controller,
-                elevation: WidgetStateProperty.all(20),
+                controller: _controladorTextoBarraBusqueda,
+                elevation: WidgetStateProperty.all(10),
                 hintText: "Buscar Pokémon...",
                 hintStyle: WidgetStateProperty.all(
                   const TextStyle(
@@ -94,7 +97,45 @@ class _BusquedaState extends State<Busqueda> {
                 ),
               ),
             ),
+            SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              width: 700,
+              height: MediaQuery.of(context).size.height * 0.65,
+              child: ListView.builder(
+                controller: _controladorScroll,
+                itemCount: 30,
+                
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    splashColor: Colors.transparent,
+                    onTap: () {
+                      Navigator.pushNamed(context, '/pokemon');
+                    },
+                    child: Align(
+                        alignment: Alignment.center, child: TarjetasPokemon()),
+                  );
+                },
+              ),
+            )
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _controladorScroll.animateTo(
+            0,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
+        },
+        backgroundColor: Color.fromARGB(255, 255, 28, 28),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+        child: const Icon(
+          Icons.arrow_upward_outlined,
+          color: Colors.white,
+          size: 38,
         ),
       ),
     );

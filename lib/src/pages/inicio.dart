@@ -28,6 +28,7 @@ class Inicio extends StatelessWidget {
             image: AssetImage('assets/images/pokeball.png'),
             width: 502,
             height: 501,
+            fit: BoxFit.contain,
           ),
         ),
       ),

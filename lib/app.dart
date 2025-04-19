@@ -8,6 +8,7 @@ class App extends StatelessWidget {
   final _routes = {
     '/': (BuildContext context) => const Inicio(),
     '/busqueda': (BuildContext context) => const Busqueda(),
+    '/pokemon': (BuildContext context) => const Pokemon(),
   };
 
   @override
