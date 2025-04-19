@@ -37,6 +37,7 @@ class Inicio extends StatelessWidget {
         height: 80,
         decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
           BoxShadow(
+              // ignore: deprecated_member_use
               color: Colors.black.withOpacity(0.25),
               blurRadius: 60,
               offset: Offset(0, 4),
@@ -46,7 +47,9 @@ class Inicio extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, '/busqueda');
+          },
           backgroundColor: Color.fromARGB(255, 255, 28, 28),
           child: Text(
             '¡Explorar!',
