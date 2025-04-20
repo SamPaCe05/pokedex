@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "nombre": "Bulbasaur",
+    "tipo": ["Grass", "Poison"],
+    "imagen": "assets/images/bulbasaur.png",
+    "debilidades": ["Fire", "Ice", "Psychic", "Flying"],
+    "historia": "Durante algún tiempo después de su nacimiento, utiliza los nutrientes que contiene la semilla en su espalda para crecer."
+  }
+]

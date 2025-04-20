@@ -18,6 +18,7 @@ class App extends StatelessWidget {
       title: 'Pokedex',
       initialRoute: '/',
       routes: _routes,
+      theme: ThemeData(fontFamily: 'Nunito'),
     );
   }
 }

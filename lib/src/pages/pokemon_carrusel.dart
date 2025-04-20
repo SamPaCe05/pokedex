@@ -36,6 +36,7 @@ class PokemonCarrusel extends StatelessWidget {
                   offset: Offset(10, 13))
             ]),
         child: Card(
+          elevation: 0,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
           child: Container(
