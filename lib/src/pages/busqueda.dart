@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:pokedex/models/pokemon_modelo.dart';
 import 'package:pokedex/src/tarjetas_pokemon.dart';
 
 class Busqueda extends StatefulWidget {
@@ -9,6 +11,37 @@ class Busqueda extends StatefulWidget {
 }
 
 class _BusquedaState extends State<Busqueda> {
+  final String _token = "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";
+  int pokemonNumeroScrolls = 0;
+  PokemonModel? pokemonModel;
+  List<PokemonModel> pokemons = [];
+  @override
+  void initState() {
+    super.initState();
+    getPokemons();
+  }
+
+  Future<void> getPokemons() async {
+    int offset = pokemonNumeroScrolls * 10;
+    pokemonNumeroScrolls++;
+
+    
+
+    List<dynamic> urlPokemons = responseListView.data["results"]
+        .map<dynamic>((pokemon) => pokemon["url"])
+        .toList();
+
+    for (dynamic url in urlPokemons) {
+      final response = await Dio().get(url,
+          options: Options(headers: {
+            "Authorization": "token $_token",
+          }));
+      pokemons.add(PokemonModel.fromJson(response.data));
+    }
+
+    setState(() {});
+  }
+
   final TextEditingController _controladorTextoBarraBusqueda =
       TextEditingController();
   final ScrollController _controladorScroll = ScrollController();
@@ -20,7 +53,7 @@ class _BusquedaState extends State<Busqueda> {
     }
   }
 
-  void _consultarApi(String texto) async {}
+  Future<void> _consultarApi(String texto) async {}
 
   @override
   Widget build(BuildContext context) {
@@ -105,8 +138,7 @@ class _BusquedaState extends State<Busqueda> {
               height: MediaQuery.of(context).size.height * 0.65,
               child: ListView.builder(
                 controller: _controladorScroll,
-                itemCount: 30,
-                
+                itemCount: pokemons.isEmpty ? 1 : pokemons.length,
                 itemBuilder: (context, index) {
                   return InkWell(
                     splashColor: Colors.transparent,
@@ -114,7 +146,11 @@ class _BusquedaState extends State<Busqueda> {
                       Navigator.pushNamed(context, '/pokemon');
                     },
                     child: Align(
-                        alignment: Alignment.center, child: TarjetasPokemon()),
+                      alignment: Alignment.center,
+                      child: pokemons.isNotEmpty
+                          ? TarjetasPokemon(pokemon: pokemons[index])
+                          : const CircularProgressIndicator(),
+                    ),
                   );
                 },
               ),
